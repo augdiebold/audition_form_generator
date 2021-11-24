@@ -1,0 +1,29 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+{% load static %}
+
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Created at</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for audition in auditions %}
+    <tr hx-get="{% url 'core:audition_detail' audition.pk %}"
+      hx-push-url="true" hx-target="#content" hx-swap="innerHTML"
+      hx-indicator="#content-loader">
+      <td>{{ audition.audition_base }}</td>
+      <td>{{ audition.created_at}}</td>
+      <td>
+        <span hx-get="{% url 'core:edit_audition' audition.pk %}" class="edit fas fa-pencil-alt"></span>
+        <span class="delete fas fa-times"></span>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/htmx.org@1.2.1"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<body class="p-3 bg-dark">
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {% bootstrap_messages %}
+    <style>
+      .edit {
+        padding-right: 10px;
+      }
+      .edit:hover {
+        color: #17a2b8;
+        opacity: 1;
+        padding-right: 10px;
+      }
+      .delete:hover {
+        color: #dc3545;
+        opacity: 1;
+      }
+    </style>
+    <div class="card">
+        <div class="card-header">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" hx-get="{% url 'core:index' %}"
+                      hx-push-url="true" hx-target="#content" hx-swap="innerHTML"
+                      hx-indicator="#content-loader">List Auditions</button>
+
+                <button type="button" class="btn btn-secondary" hx-get="{% url 'core:new_audition' %}"
+                      hx-push-url="true" hx-target="#content" hx-swap="innerHTML"
+                      hx-indicator="#content-loader">New Audition</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <progress id="content-loader" class="htmx-indicator" max="100"></progress>
+            <div id="content">{% block content %}{% endblock %}</div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

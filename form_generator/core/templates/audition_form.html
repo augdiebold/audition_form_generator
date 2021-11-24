@@ -1,0 +1,21 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+<form id="audition-form" action="." method="POST" hx-post="{% if audition.pk %}{% url 'core:edit_audition' audition.pk %}{% else %}{% url 'core:new_audition' %}{% endif %}" hx-swap="outerHTML">
+    {% csrf_token %}
+
+    {% for error in form.non_field_errors %}
+        <p style="color: red">
+            Submission error: {{ error }}
+        </p>
+    {% endfor %}
+
+    {% if audition %}
+    <h5><b>{{ audition }} - Created at:</b> {{ audition.created_at }}</h5>
+        <br>
+    {% endif %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-success" value="Submit!"/>
+
+</form>
