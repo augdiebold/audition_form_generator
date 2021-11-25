@@ -4,19 +4,20 @@ from django import forms
 from django.contrib.postgres.fields import HStoreField
 from django.db import models
 
+from form_generator.core.validators import validate_name
+
 FIELD_TYPES = [
     ('CharField', 'CharField'),
     ('EmailField', 'EmailField'),
     ('ChoiceField', 'ChoiceField'),
     ('BooleanField', 'BooleanField'),
     ('URLField', 'URLField'),
-    ('EmailField', 'EmailField'),
+    ('TextField', 'TextField'),
 ]
 
 
 class AuditionBase(models.Model):
     name = models.CharField(max_length=100, unique=True)
-
 
     def __str__(self):
         return self.name
@@ -27,7 +28,7 @@ class AuditionBase(models.Model):
 
 class FieldsAuditionBase(models.Model):
     audition_base = models.ForeignKey('AuditionBase', on_delete=models.CASCADE, related_name='fields')
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, validators=[validate_name,])
     field_type = models.CharField(max_length=100, choices=FIELD_TYPES)
     label = models.CharField(max_length=100)
     required = models.BooleanField()

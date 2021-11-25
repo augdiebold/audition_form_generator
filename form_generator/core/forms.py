@@ -12,6 +12,10 @@ class AuditionFieldsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['field_type'].widget.attrs['onchange'] = "toggleChoices(id)"
 
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        return name.lower()
+
 
 def get_audition_form(audition_base=None):
     """
