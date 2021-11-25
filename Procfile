@@ -1,0 +1,1 @@
+web: gunicorn form_generator.wsgi --log-file -

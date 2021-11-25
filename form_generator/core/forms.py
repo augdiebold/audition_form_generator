@@ -14,12 +14,19 @@ class AuditionFieldsForm(forms.ModelForm):
 
 
 def get_audition_form(audition_base=None):
+    """
+    Generate a form class for the Audition Model.
+
+    The template depends on an AuditionBase Object. The fields are generated
+    based on the FieldsAuditionBase objects.
+
+    """
     audition_fields = FieldsAuditionBase.objects.filter(audition_base=audition_base)
 
     class AuditionForm(forms.ModelForm):
         class Meta:
             model = Audition
-            fields = ['audition_base']
+            fields = ['audition_base', 'identifier']
             widgets = {
                 'audition_base': forms.Select(attrs={'hx-get': r('form_generator.core:new_audition'),
                                                      'hx-trigger': 'change',

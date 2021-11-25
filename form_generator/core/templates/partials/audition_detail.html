@@ -1,0 +1,17 @@
+<h5><b>{{ audition }}</b></h5>
+<table class="table table-hover">
+    <tbody>
+        {% for field, value in audition.get_data_items %}
+        <tr>
+            <td>
+                {{ field }}
+            </td>
+            <td>
+                {{ value }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+

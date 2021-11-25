@@ -12,16 +12,16 @@ def index(request):
     auditions = Audition.objects.all().order_by('-created_at')
 
     if request.htmx:
-        return render(request, 'audition_table.html', {'auditions': auditions})
+        return render(request, 'partials/audition_table.html', {'auditions': auditions})
 
     return render(request, 'index.html', {'auditions': auditions})
 
 
-def new(request, **kwargs):
+def new(request):
     if request.method == 'POST':
         return create(request)
 
-    return empty_form(request, **kwargs)
+    return empty_form(request)
 
 
 def create(request):
@@ -30,7 +30,7 @@ def create(request):
     form = form(request.POST)
 
     if not form.is_valid():
-        return render(request, 'audition_form.html', {'form': form})
+        return render(request, 'partials/audition_form.html', {'form': form})
 
     obj = form.save(commit=False)
     data = deepcopy(form.cleaned_data)
@@ -40,18 +40,12 @@ def create(request):
 
     messages.success(request, "Audition successfully saved!")
 
-    return render(request, 'audition_form.html', {'form': form})
+    return render(request, 'partials/audition_form.html', {'form': form})
 
 
-def empty_form(request, **kwargs):
-    #slug = kwargs.pop('slug', None)
+def empty_form(request):
 
     form = get_audition_form()
-
-    #if slug:
-    #    audition_base = get_object_or_404(AuditionBase, slug=slug)
-    #    form = get_audition_form(audition_base)
-    #    form = form(initial={'audition_base': slug})
 
     if request.htmx:
         id = request.GET.get('audition_base')
@@ -60,7 +54,7 @@ def empty_form(request, **kwargs):
             form = get_audition_form(id)
             form = form(initial={'audition_base': id})
 
-        return render(request, 'audition_form.html', {'form': form})
+        return render(request, 'partials/audition_form.html', {'form': form})
 
     return render(request, 'audition_form_full.html', {'form': form})
 
@@ -83,21 +77,28 @@ def update(request, pk):
             messages.success(request, "Audition successfully updated!")
 
     if request.htmx:
-        return render(request, 'audition_form.html', {'form': form, 'audition': audition_obj})
+        return render(request, 'partials/audition_form.html', {'form': form, 'audition': audition_obj})
 
     return render(request, 'audition_form_full.html', {'form': form, 'audition': audition_obj})
 
 
 def delete(request, pk):
     audition_obj = get_object_or_404(Audition, pk=pk)
-    audition_obj.delete()
-    messages.warning('Audition deleted!')
+
+    if request.htmx:
+        return render(request, 'modals/delete_modal.html', {'audition': audition_obj})
+
+    if request.method == 'POST':
+        messages.info(request, f'Audition {audition_obj} succesfuly deleted!')
+        audition_obj.delete()
+
+    return HttpResponseRedirect(r('core:index'))
 
 
 def detail(request, pk):
     audition_obj = get_object_or_404(Audition, pk=pk)
 
     if request.htmx:
-        return render(request, 'audition_detail.html', {'audition': audition_obj})
+        return render(request, 'partials/audition_detail.html', {'audition': audition_obj})
 
     return render(request, 'audition_detail_full.html', {'audition': audition_obj})

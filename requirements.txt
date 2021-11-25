@@ -1,5 +1,13 @@
 asgiref==3.4.1
+beautifulsoup4==4.10.0
 Django==3.2.9
+django-bootstrap4==21.1
+django-htmx==1.6.0
+django-test-without-migrations==0.6
+gunicorn==20.1.0
 psycopg2-binary==2.9.1
+python-decouple==3.5
 pytz==2021.3
+soupsieve==2.3.1
 sqlparse==0.4.2
+whitenoise==5.3.0

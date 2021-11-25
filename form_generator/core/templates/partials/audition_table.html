@@ -8,7 +8,9 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">Name</th>
+      <th scope="col">Identifier</th>
       <th scope="col">Created at</th>
+      <th scope="col">Last Update</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -18,10 +20,12 @@
       hx-push-url="true" hx-target="#content" hx-swap="innerHTML"
       hx-indicator="#content-loader">
       <td>{{ audition.audition_base }}</td>
+      <td>{{ audition.identifier }}</td>
       <td>{{ audition.created_at}}</td>
+      <td>{{ audition.updated_at}}</td>
       <td>
         <span hx-get="{% url 'core:edit_audition' audition.pk %}" class="edit fas fa-pencil-alt"></span>
-        <span class="delete fas fa-times"></span>
+        <span hx-get="{% url 'core:delete_audition' audition.pk %}"hx-trigger="click" hx-target="#modals" class="delete fas fa-times" hx-push-url="false"></span>
       </td>
     </tr>
   {% endfor %}

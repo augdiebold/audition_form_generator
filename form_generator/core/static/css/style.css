@@ -1,0 +1,14 @@
+.edit {
+  padding-right: 10px;
+}
+
+.edit:hover {
+  color: #17a2b8;
+  opacity: 1;
+  padding-right: 10px;
+}
+
+.delete:hover {
+  color: #dc3545;
+  opacity: 1;
+}

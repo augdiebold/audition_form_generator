@@ -37,6 +37,6 @@ class AuditionModelTest(TestCase):
         audition_base = AuditionBase.objects.create(name='Inventory Audit')
         FieldsAuditionBase.objects.create(audition_base=audition_base, name='machine', field_type='CharField',
                                           label='Machine', required=False)
-        Audition.objects.create(audition_base=audition_base)
+        Audition.objects.create(audition_base=audition_base, data=dict(machine='3cx'))
 
         self.assertTrue(FieldsAuditionBase.objects.exists())

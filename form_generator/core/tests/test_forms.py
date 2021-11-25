@@ -33,7 +33,7 @@ class GetAuditionFormTest(TestCase):
 
     def test_form_has_fields(self):
         audition_form = get_audition_form(audition_base=self.audition_base)
-        expected = ['audition_base', 'machine']
+        expected = ['audition_base', 'identifier', 'machine']
 
         self.assertSequenceEqual(expected, list(audition_form().fields))
 

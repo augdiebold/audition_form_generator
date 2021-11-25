@@ -1,0 +1,20 @@
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title">Delete {{ audition }}</h5>
+		</div>
+		<form id="delete-audition-form" action="{% url 'core:delete_audition' audition.pk %}" method="POST">
+			{% csrf_token %}
+			<div class="modal-body">
+			  <p>Are you sure you want to delete {{ audition }}?</p>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+			  <button type="submit" class="btn btn-danger" onclick="closeModal()">Delete</button>
+			</div>
+		</form>
+	  </div>
+	</div>
+  </div>

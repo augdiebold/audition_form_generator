@@ -34,11 +34,17 @@ class FieldsAuditionBase(models.Model):
         return self.name
 
     def choices_to_tuple(self):
+        """
+        Used to create choice options on ChoiceField
+        """
         choices = re.split(r',\s*', self.choices)
 
         return [(choice.lower(), choice) for choice in choices]
 
     def generate_field(self):
+        """
+        :returns a field object
+        """
         type_mapping = {'CharField': forms.CharField(max_length=100, label=self.label, required=self.required),
                         'ChoiceField': forms.ChoiceField(label=self.label, required=self.required),
                         'TextField': forms.CharField(widget=forms.Textarea, label=self.label, required=self.required),
@@ -55,11 +61,13 @@ class FieldsAuditionBase(models.Model):
 
 class Audition(models.Model):
     audition_base = models.ForeignKey('AuditionBase', on_delete=models.PROTECT, related_name='auditions')
+    identifier = models.CharField('identifier', blank=True, null=True, max_length=100)
     data = HStoreField()
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    def data_to_form(self):
-        data_dict = self.data
-        data_dict.update(audition_base=self.audition_base)
+    def __str__(self):
+        return f'{self.audition_base} - {self.identifier}'
 
-        return data_dict
+    def get_data_items(self):
+        return self.data.items()

@@ -14,15 +14,14 @@ class AuditionNewGet(TestCase):
         self.assertEqual(200, self.resp.status_code)
 
     def test_template(self):
-        """Must use subscriptions/subscription_form.html"""
+        """Must use audition_form_full.html"""
         self.assertTemplateUsed(self.resp, 'audition_form_full.html')
 
     def test_html(self):
         """Html must contain input tags"""
 
-        tags = (('<a ', 1),
-                ('<form', 1),
-                ('<input', 2),
+        tags = (('<form', 1),
+                ('<input', 3),
                 ('type="submit"', 1))
 
         for text, count in tags:
@@ -34,7 +33,7 @@ class AuditionNewGet(TestCase):
         self.assertContains(self.resp, 'csrfmiddlewaretoken')
 
     def test_has_form(self):
-        """Context must have subscription form"""
+        """Context must have audition form"""
         form = self.resp.context['form']
         self.assertIsInstance(form(), forms.ModelForm)
 
@@ -48,14 +47,14 @@ class AuditionNewGetHtmx(TestCase):
         self.assertEqual(200, self.resp.status_code)
 
     def test_template(self):
-        """Must use subscriptions/subscription_form.html"""
-        self.assertTemplateUsed(self.resp, 'audition_form.html')
+        """Must use partials/audition_form.html"""
+        self.assertTemplateUsed(self.resp, 'partials/audition_form.html')
 
     def test_html(self):
         """Html must contain input tags"""
 
         tags = (('<form', 1),
-                ('<input', 2),
+                ('<input', 3),
                 ('type="submit"', 1))
 
         for text, count in tags:
@@ -67,7 +66,7 @@ class AuditionNewGetHtmx(TestCase):
         self.assertContains(self.resp, 'csrfmiddlewaretoken')
 
     def test_has_form(self):
-        """Context must have subscription form"""
+        """Context must have audition form"""
         form = self.resp.context['form']
         self.assertIsInstance(form(), forms.ModelForm)
 
@@ -87,14 +86,14 @@ class AuditionNewGetObjHtmx(TestCase):
         self.assertEqual(200, self.resp.status_code)
 
     def test_template(self):
-        """Must use subscriptions/subscription_form.html"""
-        self.assertTemplateUsed(self.resp, 'audition_form.html')
+        """Must use partials/audition_form.html"""
+        self.assertTemplateUsed(self.resp, 'partials/audition_form.html')
 
     def test_html(self):
         """Html must contain input tags"""
 
         tags = (('<form', 1),
-                ('<input', 3),
+                ('<input', 4),
                 ('type="submit"', 1))
 
         for text, count in tags:
@@ -106,7 +105,7 @@ class AuditionNewGetObjHtmx(TestCase):
         self.assertContains(self.resp, 'csrfmiddlewaretoken')
 
     def test_has_form(self):
-        """Context must have subscription form"""
+        """Context must have audition form"""
         form = self.resp.context['form']
         self.assertIsInstance(form, forms.ModelForm)
 
@@ -130,11 +129,11 @@ class AuditionNewPostInvalid(TestCase):
         self.resp = self.client.post(r('form_generator.core:new_audition'), {})
 
     def test_template(self):
-        """Must use subscriptions/subscription_form.html"""
-        self.assertTemplateUsed(self.resp, 'audition_form.html')
+        """Must use partials/audition_form.html"""
+        self.assertTemplateUsed(self.resp, 'partials/audition_form.html')
 
     def test_has_form(self):
-        """Context must have subscription form"""
+        """Context must have audition form"""
         form = self.resp.context['form']
         self.assertIsInstance(form, forms.ModelForm)
 
