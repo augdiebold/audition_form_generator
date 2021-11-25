@@ -8,12 +8,15 @@ FIELD_TYPES = [
     ('CharField', 'CharField'),
     ('EmailField', 'EmailField'),
     ('ChoiceField', 'ChoiceField'),
+    ('BooleanField', 'BooleanField'),
+    ('URLField', 'URLField'),
+    ('EmailField', 'EmailField'),
 ]
 
 
 class AuditionBase(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(default=name)
+
 
     def __str__(self):
         return self.name

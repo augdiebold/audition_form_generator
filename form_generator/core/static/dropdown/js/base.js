@@ -19,17 +19,3 @@ function toggleChoices(id){
             hide(choicesField);
         }
 };
-
-
-
-function onLoad(id){
-    var testField = document.getElementById(id).value;
-    alert(testField);
-};
-
-
-
-window.onload = function(){
-    onLoad('id_name');
-}
-

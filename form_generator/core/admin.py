@@ -15,7 +15,6 @@ class FieldsAuditionBaseInline(admin.TabularInline):
 
 
 class AuditionBaseAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
     inlines = [
         FieldsAuditionBaseInline,
     ]
